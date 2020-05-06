@@ -1,0 +1,23 @@
+$left-offset: 100px;
+
+html {
+  height: 100%;
+  margin: 0px;
+}
+
+body {
+  min-height: 100%;
+  margin: 0px;
+  background-color: red($color: #000000);
+}
+
+.diagram-component {
+  width: calc(100% - #{$left-offset});
+  //   width: calc(100% - $left-offset);
+  left: $left-offset;
+  border: 0px !important;
+  height: 100%;
+  position: fixed !important;
+  border: solid 1px black;
+  background-color: #e5e5e5;
+}

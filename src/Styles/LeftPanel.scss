@@ -1,0 +1,70 @@
+$text-color: #0f0f0f;
+.left-panel {
+  position: fixed;
+  background-color: white;
+  z-index: 100;
+  width: 300px;
+  height: 100%;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.06);
+  color: $text-color;
+
+  & > .information-area {
+    & > p {
+      text-align: justify;
+    }
+    margin-bottom: 20px;
+  }
+
+  & > hr {
+    margin-bottom: 24px;
+    background-color: #d7d7d7;
+    color: #757575;
+    height: 1px;
+    border: none;
+  }
+
+  & > .tab-options {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 8px;
+    font-size: 18px;
+
+    & > button {
+      transition: color 0.2s;
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+    }
+  }
+
+  & > .sensors {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row-gap: 20px;
+    padding: 24px;
+    justify-content: space-between;
+    & > .value-input {
+      display: flex;
+      flex-direction: column;
+      & > label {
+        font-size: 14px;
+        color: #474747;
+      }
+      & > input {
+        width: 110px;
+
+        border: 1px solid #d7d7d7;
+        box-sizing: border-box;
+        border-radius: 4px;
+        outline: none;
+        padding: 8px;
+      }
+    }
+  }
+}

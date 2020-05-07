@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as go from "gojs";
 import LeftPanel from "./LeftPanel";
+import TopBar from "./TopBar";
 import { ReactDiagram } from "gojs-react";
 
 function initDiagram() {
@@ -126,7 +127,54 @@ function handleModelChange(changes) {
   alert("GoJS model changed!");
 }
 
+const PopUp = (props) => {
+  if (props.displayPopUp !== null)
+    return (
+      <div
+        className="pop-up"
+        style={{ left: props.displayPopUp[0], top: props.displayPopUp[1] + 18 }}
+      >
+        {props.content}
+      </div>
+    );
+  return <div style={{ display: "none" }}></div>;
+};
+
 class Canvas extends Component {
+  state = {
+    transitions: [{ label: "primire-tr" }, { label: "det-pachet" }],
+    displayPopUp: null,
+  };
+
+  componentDidMount() {
+    window.addEventListener(
+      "contextmenu",
+      (e) => {
+        e.preventDefault();
+        console.log(e.pageX);
+        console.log(e.pageY);
+        console.log(e.target.className);
+        if (e.target.className === "transition")
+          this.setState({ displayPopUp: [e.pageX, e.pageY] });
+        else if (this.state.displayPopUp !== null)
+          this.setState({ displayPopUp: null });
+
+        return false;
+      },
+      false
+    );
+
+    document.addEventListener(
+      "click",
+      (e) => {
+        console.log("CALLED");
+        if (e.target.className !== "pop-up")
+          this.setState({ displayPopUp: null });
+      },
+      true
+    );
+  }
+
   render() {
     return (
       <div>
@@ -156,6 +204,11 @@ class Canvas extends Component {
           onModelChange={handleModelChange}
         />
         <LeftPanel />
+        <TopBar transitions={this.state.transitions} />
+        <PopUp
+          displayPopUp={this.state.displayPopUp}
+          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et "
+        />
       </div>
     );
   }

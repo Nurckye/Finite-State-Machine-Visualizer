@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "statesNumber": 5
+  },
+  "environment": [
+    {
+      "label": "Final Destination X",
+      "type": "FLOAT",
+      "value": 54.2,
+      "key": 1
+    },
+    {
+      "label": "Final Destination Y",
+      "type": "FLOAT",
+      "value": 54.2,
+      "key": 2
+    },
+    {
+      "label": "OFF / ON",
+      "type": "BOOL",
+      "value": false,
+      "key": 3
+    },
+    {
+      "label": "Has package",
+      "type": "BOOL",
+      "value": false,
+      "key": 4,
+      "min": 0,
+      "step": 0.1,
+      "max": 123
+    }
+  ],
+  "sensors": [
+    {
+      "name": "Water sensor",
+      "key": 1,
+      "maxValue": 70,
+      "minValue": 0,
+      "value": 60,
+      "limit": {
+        "label": "Maximum Rain",
+        "valueType": "NUMBER",
+        "value": 1,
+        "min": 0,
+        "step": 0.1,
+        "max": 123
+      }
+    },
+    {
+      "name": "Wind sensor",
+      "key": 2,
+      "maxValue": 13,
+      "minValue": 0,
+      "value": 30,
+      "limit": {
+        "label": "Maximum Rain",
+        "valueType": "NUMBER",
+        "value": 50,
+        "min": 0,
+        "step": 0.1,
+        "max": 123
+      }
+    },
+    {
+      "name": "Altitude sensor",
+      "key": 3,
+      "maxValue": 13,
+      "minValue": 0,
+      "value": 30,
+      "limit": {
+        "label": "Maximum Rain",
+        "valueType": "RANGE",
+        "value": [10, 50],
+        "min": 0,
+        "step": 0.1,
+        "max": 123
+      }
+    },
+    {
+      "name": "GPS Lat Nord",
+      "key": 4,
+      "maxValue": 13,
+      "minValue": 0,
+      "value": 30,
+      "limit": {
+        "label": "Max distance lat nord",
+        "valueType": "RELATIVE",
+        "relativeToEnviron": 1,
+        "value": 50,
+        "min": 0,
+        "step": 0.1,
+        "max": 123
+      }
+    }
+  ],
+  "states": [
+    {
+      "name": "Asteptare Comanda",
+      "information": "Prima chestie",
+      "key": 1,
+      "category": "Initial"
+    },
+    {
+      "name": "Asteptare Comanda",
+      "information": "A doua",
+      "key": 2,
+      "category": ""
+    },
+    {
+      "name": "Asteptare Comanda",
+      "information": "Blaha",
+      "key": 3,
+      "category": "Final"
+    },
+    {
+      "name": "Stau csf",
+      "information": "O nebunie curata",
+      "key": 4,
+      "category": "Final"
+    },
+    {
+      "name": "Asteptare Comanda",
+      "information": "Blaha ultima aoara",
+      "key": 5,
+      "category": "Final"
+    }
+  ],
+  "transitions": [
+    {
+      "from": 4,
+      "to": 1,
+      "label": "primire-tr",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [1],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 1,
+      "to": 2,
+      "label": "aruncare-poke-ball",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 3,
+      "to": 2,
+      "label": "play-weird-rap",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 2,
+      "to": 2,
+      "label": "play-weird-rap",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 1,
+      "to": 3,
+      "label": "harlem-shake",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 2,
+      "to": 5,
+      "label": "WKDED",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 5,
+      "to": 4,
+      "label": "ALA CU GPS",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [4],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 4,
+      "to": 2,
+      "label": "WKDED",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    }
+  ]
+}

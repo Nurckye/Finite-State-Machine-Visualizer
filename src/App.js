@@ -2,11 +2,12 @@ import React from "react";
 import "./Styles/Canvas.scss";
 import "./Styles/LeftPanel.scss";
 import "./Styles/TopBar.scss";
+import "./Styles/Switch.scss";
 
-import Canvas from "./Components/Canvas";
+import LayoutController from "./Components/LayoutController";
 
 function App() {
-  return <Canvas />;
+  return <LayoutController />;
 }
 
 export default App;

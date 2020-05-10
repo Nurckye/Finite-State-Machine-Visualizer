@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as go from "gojs";
-import LeftPanel from "./LeftPanel";
 import TopBar from "./TopBar";
 import { ReactDiagram } from "gojs-react";
 
@@ -24,8 +23,8 @@ function initDiagram() {
         360,
         rad,
         rad,
-        rad - 5,
-        rad - 5
+        rad - 4,
+        rad - 4
       ).close()
     );
 
@@ -123,57 +122,52 @@ function initDiagram() {
   return diagram;
 }
 
-function handleModelChange(changes) {
-  alert("GoJS model changed!");
-}
-
-const PopUp = (props) => {
-  if (props.displayPopUp !== null)
-    return (
-      <div
-        className="pop-up"
-        style={{ left: props.displayPopUp[0], top: props.displayPopUp[1] + 18 }}
-      >
-        {props.content}
-      </div>
-    );
-  return <div style={{ display: "none" }}></div>;
-};
-
 class Canvas extends Component {
   state = {
-    transitions: [{ label: "primire-tr" }, { label: "det-pachet" }],
-    displayPopUp: null,
+    currentNode: null,
+    states: [],
+    transitions: [],
+    transitionGraph: [],
+    initial: null,
   };
 
-  componentDidMount() {
-    window.addEventListener(
-      "contextmenu",
-      (e) => {
-        e.preventDefault();
-        console.log(e.pageX);
-        console.log(e.pageY);
-        console.log(e.target.className);
-        if (e.target.className === "transition")
-          this.setState({ displayPopUp: [e.pageX, e.pageY] });
-        else if (this.state.displayPopUp !== null)
-          this.setState({ displayPopUp: null });
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (
+  //     this.props.states !== nextProps.states ||
+  //     this.props.transitions !== nextProps.transitions ||
+  //     this.props.transitionGraph !== nextProps.transitionGraph ||
+  //     this.props.initial !== nextProps.initial ||
+  //     this.props.sensors !== nextProps.sensors ||
+  //     this.props.environment !== nextProps.environment ||
+  //     this.state.currentNode !== nextState.currentNode
+  //   )
+  //     return true;
+  //   return false;
+  // }
 
-        return false;
-      },
-      false
-    );
-
-    document.addEventListener(
-      "click",
-      (e) => {
-        console.log("CALLED");
-        if (e.target.className !== "pop-up")
-          this.setState({ displayPopUp: null });
-      },
-      true
-    );
+  constructor(props) {
+    super(props);
+    this.diagramRef = React.createRef();
   }
+
+  stepInGraph = (nextNode) => {
+    let markedColor = "#3f4c1c";
+    let unmarkedColor = "white";
+    this.setState({ currentNode: nextNode }, () => {
+      const diagram = this.diagramRef.current.getDiagram();
+      diagram.model.commit((m) => {
+        let data = null;
+        for (let nd of m.nodeDataArray) {
+          m.set(nd, "color", unmarkedColor);
+          if (nd.key == nextNode) {
+            data = nd;
+          }
+        }
+        m.set(data, "color", markedColor);
+      }, "increment");
+      this.props.setCurrentNodeLayout(nextNode);
+    });
+  };
 
   render() {
     return (
@@ -181,33 +175,24 @@ class Canvas extends Component {
         <ReactDiagram
           initDiagram={initDiagram}
           divClassName="diagram-component"
-          nodeDataArray={[
-            // the "key" and "parent" property names are required,
-            // but you can add whatever data properties you need for your app
-            { key: "1", name: "Don Meow", color: "white", text: "sdsdasad" },
-            { key: "2", name: "Demeter", color: "white", category: "Final" },
-            { key: "3", name: "Copricat", color: "white", category: "" },
-            { key: "4", name: "Jellylorum", color: "white" },
-            { key: "5", name: "Alonzo", color: "white" },
-            { key: "6", name: "Munkustrap", color: "white" },
-          ]}
-          linkDataArray={[
-            { from: "1", to: "4", text: "HERE" },
-            { from: "4", to: "2" },
-            { from: "4", to: "1" },
-            { from: "4", to: "3" },
-            { from: "6", to: "3" },
-            { from: "5", to: "2" },
-            { from: "5", to: "1" },
-            { from: "3", to: "3" },
-          ]}
-          onModelChange={handleModelChange}
+          ref={this.diagramRef}
+          nodeDataArray={this.props.nodeDataArray}
+          linkDataArray={this.props.linkDataArray}
+          onModelChange={() => {}}
         />
-        <LeftPanel />
-        <TopBar transitions={this.state.transitions} />
-        <PopUp
-          displayPopUp={this.state.displayPopUp}
-          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et "
+
+        <TopBar
+          initial={this.props.initial}
+          stepInGraph={this.stepInGraph}
+          incrementData={this.incrementData}
+          sensors={this.props.sensors}
+          environment={this.props.environment}
+          currentNode={this.state.currentNode}
+          transitions={
+            this.state.currentNode !== null
+              ? this.props.transitionGraph[this.state.currentNode]
+              : {}
+          }
         />
       </div>
     );

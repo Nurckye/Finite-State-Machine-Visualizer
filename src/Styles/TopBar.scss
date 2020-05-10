@@ -1,0 +1,78 @@
+$left-offset: 400px;
+$right-offset: 170px;
+$right-offset-btn: 120px;
+
+.start-button {
+  position: fixed;
+  left: calc(100% - #{$right-offset-btn});
+  background-color: white;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 60%;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.06);
+  border: none;
+  top: 24px;
+  outline: none;
+  cursor: pointer;
+
+  &:hover > svg {
+    opacity: 0.8;
+  }
+  & > svg {
+    margin-left: 5px;
+  }
+}
+
+.top-bar {
+  position: fixed;
+  background-color: white;
+  width: calc(100% - #{$left-offset} - #{$right-offset});
+  height: 64px;
+  left: $left-offset;
+  top: 24px;
+  border-radius: 8px;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  & > button {
+    transition: 0.2s;
+    background: #8a8a8a;
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    margin-left: 20px;
+    border-radius: 16px;
+    border: none;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.pop-up {
+  position: fixed;
+  width: 200px;
+  height: 150px;
+  padding: 10px 20px;
+  background-color: white;
+  border: 1px solid #d7d7d7;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.08);
+  & h1 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    margin-top: 4px;
+  }
+  & p {
+    font-size: 12px;
+  }
+}

@@ -25,15 +25,12 @@
       "label": "Has package",
       "type": "BOOL",
       "value": false,
-      "key": 4,
-      "min": 0,
-      "step": 0.1,
-      "max": 123
+      "key": 4
     }
   ],
   "sensors": [
     {
-      "name": "Water sensor",
+      "name": "Rain sensor",
       "key": 1,
       "maxValue": 70,
       "minValue": 0,
@@ -97,7 +94,7 @@
   "states": [
     {
       "name": "Asteptare Comanda",
-      "information": "Prima chestie",
+      "information": "Prima stare",
       "key": 1,
       "category": "Initial"
     },
@@ -109,19 +106,19 @@
     },
     {
       "name": "Asteptare Comanda",
-      "information": "Blaha",
+      "information": "Descriere Stare asteptare",
       "key": 3,
       "category": "Final"
     },
     {
       "name": "Stau csf",
-      "information": "O nebunie curata",
+      "information": "Descriere Stare",
       "key": 4,
       "category": "Final"
     },
     {
       "name": "Asteptare Comanda",
-      "information": "Blaha ultima aoara",
+      "information": "Descriere stare asteptare",
       "key": 5,
       "category": "Final"
     }
@@ -130,7 +127,7 @@
     {
       "from": 4,
       "to": 1,
-      "label": "primire-tr",
+      "label": "Eveniment Y",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -150,7 +147,7 @@
     {
       "from": 1,
       "to": 2,
-      "label": "aruncare-poke-ball",
+      "label": "Eveniment H",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -170,7 +167,7 @@
     {
       "from": 3,
       "to": 2,
-      "label": "play-weird-rap",
+      "label": "Eveniment X",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -190,7 +187,7 @@
     {
       "from": 2,
       "to": 2,
-      "label": "play-weird-rap",
+      "label": "Eveniment K",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -210,7 +207,7 @@
     {
       "from": 1,
       "to": 3,
-      "label": "harlem-shake",
+      "label": "Eveniment Q",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -230,7 +227,7 @@
     {
       "from": 2,
       "to": 5,
-      "label": "WKDED",
+      "label": "Eveniment T",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -250,7 +247,7 @@
     {
       "from": 5,
       "to": 4,
-      "label": "ALA CU GPS",
+      "label": "Eveniment G",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"
@@ -270,7 +267,7 @@
     {
       "from": 4,
       "to": 2,
-      "label": "WKDED",
+      "label": "Eveniment L",
       "information": {
         "name": "Nume tranzitie",
         "details": "Blah blah blash"

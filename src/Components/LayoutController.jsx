@@ -1,15 +1,50 @@
-import React, { Component, useState, useEffect } from "react";
+import React, {
+  Component,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import Canvas from "./Canvas";
 import LeftPanel from "./LeftPanel";
 
 const defaultInformation = {
-  name: "Drona de livrare pachete",
+  name: "Simulator pentru automat finit determinist",
   information:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "Acesta este simulatorul creat de Nitescu Radu, Tae Andreea, Stefan Andreea, Pinzariu Denis si Chelu Madalina pentru drona de livrat pachete. Incarcati codul atasat automatului pentru a-l reprezenta intr-o forma vizuala.",
 };
+
+function useEventListener(eventName, handler, element = window) {
+  const savedHandler = useRef();
+  useEffect(() => {
+    savedHandler.current = handler;
+  }, [handler]);
+
+  useEffect(() => {
+    const isSupported = element && element.addEventListener;
+    if (!isSupported) return;
+
+    const eventListener = (event) => savedHandler.current(event);
+
+    element.addEventListener(eventName, eventListener);
+
+    return () => {
+      element.removeEventListener(eventName, eventListener);
+    };
+  }, [eventName, element]);
+}
 
 function ProjectInfoPopUp(props) {
   const [isOpen, changeOpen] = useState(false);
+  const handler = useCallback((e) => {
+    if (
+      typeof e.target.className === "string" &&
+      e.target.className !== "pr-info"
+    )
+      changeOpen(false);
+  }, []);
+  useEventListener("click", handler);
+
   const InfoIcon = () => (
     <svg
       width="8"
@@ -31,24 +66,25 @@ function ProjectInfoPopUp(props) {
 
   return (
     <div
-      className="info-container"
+      className="info-container pr-info"
       style={{
         display: Object.values(props.states).length !== 0 ? "flex" : "none",
       }}
     >
       <table
+        className="pr-info"
         style={{
           display: isOpen ? "flex" : "none",
         }}
       >
         {Object.values(props.states).map((element) => (
-          <tr>
-            <th>{`Q${element.key}`}</th>
-            <th>{element.name}</th>
+          <tr className="pr-info">
+            <th className="pr-info">{`Q${element.key}`}</th>
+            <th className="pr-info">{element.name}</th>
           </tr>
         ))}
       </table>
-      <button onClick={() => changeOpen(!isOpen)}>
+      <button className="pr-info" onClick={() => changeOpen(!isOpen)}>
         <InfoIcon />
       </button>
     </div>
@@ -103,15 +139,6 @@ class LayoutController extends Component {
         return false;
       },
       false
-    );
-
-    document.addEventListener(
-      "click",
-      (e) => {
-        if (e.target.className !== "pop-up")
-          this.setState({ displayPopUp: null });
-      },
-      true
     );
   }
 

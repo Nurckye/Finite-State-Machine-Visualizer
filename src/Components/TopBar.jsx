@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const PlayIcon = () => (
   <svg
@@ -49,7 +49,6 @@ const isInLimits = (sensor, environment) => {
 const meetsRequirements = (transition, environment) => {
   let foundOne = false;
   transition.requires.forEach((rq) => {
-    console.log(environment[rq.which].value, rq.value);
     if (environment[rq.which].value !== rq.value) {
       foundOne = true;
     }
@@ -86,9 +85,8 @@ function TopBar(props) {
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 2; //scroll-fast
+      const walk = (x - startX) * 2;
       slider.scrollLeft = scrollLeft - walk;
-      console.log(walk);
     });
   });
 
@@ -119,6 +117,13 @@ function TopBar(props) {
         ))}
       </div>
       <button
+        style={{
+          cursor:
+            Object.entries(props.states).length === 0
+              ? "not-allowed"
+              : "pointer",
+        }}
+        disabled={Object.entries(props.states).length === 0}
         className="start-button"
         onClick={() => {
           props.stepInGraph(started ? null : props.initial);

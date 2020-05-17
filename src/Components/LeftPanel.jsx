@@ -12,8 +12,8 @@ const ErrorIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M31.2792 37.2599L36.6033 31.9358L27.9517 23.2842L36.6032 14.6327L31.2791 9.30857L22.6276 17.9601L13.9759 9.30841L8.65179 14.6325L17.3035 23.2842L8.65168 31.936L13.9758 37.2601L22.6276 28.6083L31.2792 37.2599Z"
       fill="white"
     />
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
 });
 
 function valuetext(value) {
-  return `${value}sdsddsadasasdsadasC`;
+  return `${value}`;
 }
 
 function RangeSlider(props) {
@@ -112,12 +112,6 @@ function SimpleSlider(props) {
     </div>
   );
 }
-
-const test = {
-  title: "Livrare pachet",
-  content:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-};
 
 const DescriptionArea = (props) => {
   return (
@@ -318,13 +312,11 @@ class LeftPanel extends Component {
     });
     this.props.machineSetter.linkDataArray(transitionArr);
 
-    console.log(loadedMachine);
     this.setState({ isLoaded: true, errored: false, errorMessage: "" });
   }
 
   sensorChange = (key) => (e) => {
     let inputValue = e.target.value;
-    console.log("Sensor val:", e.target.value);
     let temp_sensors = Object.assign({}, this.props.sensors);
     temp_sensors[key].value = inputValue;
     this.props.machineSetter.sensors(temp_sensors);
@@ -332,21 +324,18 @@ class LeftPanel extends Component {
 
   envChange = (key) => (e) => {
     let inputValue = e.target.value;
-    console.log("Env val:", e.target.value);
     let temp_environment = Object.assign({}, this.props.environment);
     temp_environment[key].value = inputValue;
     this.props.machineSetter.environment(temp_environment);
   };
 
   envChangeBool = (key) => (value) => {
-    console.log("Env val:", value);
     let temp_environment = Object.assign({}, this.props.environment);
     temp_environment[key].value = value;
     this.props.machineSetter.environment(temp_environment);
   };
 
   limitsChange = (key) => (value) => {
-    console.log("VAL E", value);
     let temp_sensors = Object.assign({}, this.props.sensors);
     temp_sensors[key].limit.value = value;
     this.props.machineSetter.sensors(temp_sensors);

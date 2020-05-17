@@ -1,16 +1,13 @@
 {
-  "metadata": {
-    "statesNumber": 15
-  },
   "environment": [
     {
-      "label": "Final Destination X",
+      "label": "Coordonate latitudine nordica (°N)",
       "type": "FLOAT",
       "value": 54.2,
       "key": 1
     },
     {
-      "label": "Final Destination Y",
+      "label": "Coordonate longitudine estica (°E)",
       "type": "FLOAT",
       "value": 54.2,
       "key": 2
@@ -22,7 +19,7 @@
       "key": 3
     },
     {
-      "label": "Has package",
+      "label": "Pachet incarcat",
       "type": "BOOL",
       "value": false,
       "key": 4
@@ -30,80 +27,170 @@
   ],
   "sensors": [
     {
-      "name": "Water sensor",
+      "name": "Latitudine Nordica (°N)",
       "key": 1,
-      "maxValue": 70,
+      "maxValue": 180,
       "minValue": 0,
-      "value": 60,
+      "value": 45,
       "limit": {
-        "label": "Maximum Rain",
-        "valueType": "NUMBER",
-        "value": 1,
-        "min": 0,
-        "step": 0.1,
-        "max": 123
-      }
-    },
-    {
-      "name": "Wind sensor",
-      "key": 2,
-      "maxValue": 13,
-      "minValue": 0,
-      "value": 30,
-      "limit": {
-        "label": "Maximum Rain",
-        "valueType": "NUMBER",
-        "value": 50,
-        "min": 0,
-        "step": 0.1,
-        "max": 123
-      }
-    },
-    {
-      "name": "Altitude sensor",
-      "key": 3,
-      "maxValue": 13,
-      "minValue": 0,
-      "value": 30,
-      "limit": {
-        "label": "Maximum Rain",
-        "valueType": "RANGE",
-        "value": [10, 50],
-        "min": 0,
-        "step": 0.1,
-        "max": 123
-      }
-    },
-    {
-      "name": "GPS Lat Nord",
-      "key": 4,
-      "maxValue": 13,
-      "minValue": 0,
-      "value": 30,
-      "limit": {
-        "label": "Max distance lat nord",
+        "label": "Diferenta maxima latitudine nordica (m)",
         "valueType": "RELATIVE",
         "relativeToEnviron": 1,
         "value": 50,
         "min": 0,
-        "step": 0.1,
-        "max": 123
+        "step": 1,
+        "max": 300
       }
     },
     {
-      "name": "Senzor de distanta",
+      "name": "Longitudine Estica (°E)",
+      "key": 2,
+      "maxValue": 360,
+      "minValue": 0,
+      "value": 30,
+      "limit": {
+        "label": "Diferenta maxima longitudine estica (m)",
+        "valueType": "RELATIVE",
+        "relativeToEnviron": 2,
+        "value": 50,
+        "min": 0,
+        "step": 1,
+        "max": 300
+      }
+    },
+    {
+      "name": "Altitudine (m)",
+      "key": 3,
+      "maxValue": 2500,
+      "minValue": 0,
+      "value": 100,
+      "limit": {
+        "label": "Altitudine normala de zbor",
+        "valueType": "RANGE",
+        "value": [30, 200],
+        "min": 0,
+        "step": 1,
+        "max": 2500
+      }
+    },
+    {
+      "name": "Umiditate (%)",
+      "key": 4,
+      "maxValue": 100,
+      "minValue": 0,
+      "value": 50,
+      "limit": {
+        "label": "Umiditate limita (%)",
+        "valueType": "NUMBER",
+        "value": 60,
+        "min": 0,
+        "step": 0.5,
+        "max": 100
+      }
+    },
+    {
+      "name": "Distanta (m)",
       "key": 5,
       "maxValue": 10,
-      "minValue": 1,
-      "value": 30,
+      "minValue": 0.1,
+      "value": 10,
       "limit": {
-        "label": "Obstacle distance",
-        "valueType": "RELATIVE",
-        "relativeToEnviron": 1,
+        "label": "Apropiere maxima de obstacol (m)",
+        "valueType": "NUMBER",
         "value": 50,
         "min": 0,
         "step": 0.1,
-        "max": 123
+        "max": 10
+      }
+    },
+    {
+      "name": "Temperatura (°C)",
+      "key": 6,
+      "maxValue": 80,
+      "minValue": -40,
+      "value": 20,
+      "limit": {
+        "label": "Temperatura normala (°C)",
+        "valueType": "RANGE",
+        "value": [-5, 40],
+        "min": -10,
+        "step": 0.5,
+        "max": 45
+      }
+    },
+    {
+      "name": "Gaz (ppm)",
+      "key": 7,
+      "maxValue": 10000,
+      "minValue": 300,
+      "value": 150,
+      "limit": {
+        "label": "Valoare normala gaze (ppm)",
+        "valueType": "NUMBER",
+        "value": 150,
+        "min": 1000,
+        "step": 5,
+        "max": 2000
+      }
+    },
+    {
+      "name": "Greutate (kg)",
+      "key": 8,
+      "maxValue": 50,
+      "minValue": 0,
+      "value": 0,
+      "limit": {
+        "label": "Nivel lipsa greutate incarcata (kg)",
+        "valueType": "NUMBER",
+        "value": 5,
+        "min": 0,
+        "step": 0.1,
+        "max": 10
+      }
+    },
+    {
+      "name": "Unghi ruliu (°)",
+      "key": 9,
+      "maxValue": 180,
+      "minValue": -180,
+      "value": 0,
+      "limit": {
+        "label": "Unghi de ruliu maxim (°)",
+        "valueType": "NUMBER",
+        "value": 5,
+        "min": 5,
+        "step": 0.5,
+        "max": 15
+      }
+    },
+    {
+      "name": "Unghi giratie (°)",
+      "key": 10,
+      "maxValue": 180,
+      "minValue": -180,
+      "value": 0,
+      "limit": {
+        "label": "Unghi de giratie maxim (°)",
+        "valueType": "NUMBER",
+        "value": 5,
+        "min": 5,
+        "step": 0.5,
+        "max": 15
+      }
+    },
+    {
+      "name": "Unghi tangaj (°)",
+      "key": 11,
+      "maxValue": 180,
+      "minValue": -180,
+      "value": 0,
+      "limit": {
+        "label": "Unghi de tangaj maxim (°)",
+        "valueType": "NUMBER",
+        "value": 5,
+        "min": 5,
+        "step": 0.5,
+        "max": 15
       }
     }
   ],
@@ -245,10 +332,6 @@
         {
           "which": 3,
           "value": true
-        },
-        {
-          "which": 4,
-          "value": true
         }
       ]
     },
@@ -265,10 +348,6 @@
         {
           "which": 3,
           "value": true
-        },
-        {
-          "which": 4,
-          "value": false
         }
       ]
     },
@@ -300,7 +379,7 @@
         "name": "Primire traseu",
         "details": "Primirea traseului și a hărții care cuprinde zonele roșii (zone în care drona nu are voie să aterizeze în caz de urgență)."
       },
-      "dependsOn": [4],
+      "dependsOn": [],
       "requires": [
         {
           "which": 3,
@@ -320,7 +399,7 @@
         "name": "Atingerea altitudinii corespunzătoare",
         "details": "Este atinsa inaltimea prestabilita la care drona trebuie sa ajunga."
       },
-      "dependsOn": [],
+      "dependsOn": [3],
       "requires": [
         {
           "which": 3,
@@ -376,14 +455,10 @@
         "name": "Conditii nefavorabile",
         "details": "Accelerometrul detectează vânt puternic (accelerația este negativă). Senzorul de umiditate detectează o ploaie puternică. Serverul trimite o alertă de oprire către dronă."
       },
-      "dependsOn": [1, 2],
+      "dependsOn": [4, 6],
       "requires": [
         {
           "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
           "value": true
         }
       ]
@@ -396,14 +471,10 @@
         "name": "Primirea locației de aterizare",
         "details": "Drona primeste o zona in care ii este permis sa aterizeze."
       },
-      "dependsOn": [4],
+      "dependsOn": [1, 2],
       "requires": [
         {
           "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
           "value": true
         }
       ]
@@ -416,14 +487,10 @@
         "name": "Notificare continuare zbor",
         "details": "Daca condițiile meteorologice permit continuarea zborului, drona primește notificarea de a decola."
       },
-      "dependsOn": [],
+      "dependsOn": [4, 5, 6, 7],
       "requires": [
         {
           "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
           "value": true
         }
       ]
@@ -436,14 +503,10 @@
         "name": "Intrare spatiu oprire",
         "details": "În funcție de senzorii GPS putem constata dacă drona a ajuns la destinație"
       },
-      "dependsOn": [4],
+      "dependsOn": [1, 2],
       "requires": [
         {
           "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
           "value": true
         }
       ]
@@ -476,7 +539,7 @@
         "name": "Detectare Lipsa Greutate",
         "details": "Determină folosind senzorul de greutate faptul că drona nu este încărcată"
       },
-      "dependsOn": [],
+      "dependsOn": [8],
       "requires": [
         {
           "which": 3,
@@ -516,7 +579,7 @@
         "name": "Primire Traseu Retur",
         "details": "Drona primește un traseu de reîntoarcere"
       },
-      "dependsOn": [4],
+      "dependsOn": [],
       "requires": [
         {
           "which": 3,
@@ -536,7 +599,7 @@
         "name": "Detectare lipsa pachet",
         "details": "Drona constata ca nu are pachet"
       },
-      "dependsOn": [],
+      "dependsOn": [8],
       "requires": [
         {
           "which": 3,
@@ -556,27 +619,23 @@
         "name": "Detectare obstacol",
         "details": "Folosind senzorii de distanță putem interpreta dacă avem obstacol în față"
       },
-      "dependsOn": [5],
+      "dependsOn": [3],
       "requires": [
         {
           "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
           "value": true
         }
       ]
     },
     {
-      "from": 6,
-      "to": 10,
+      "from": 10,
+      "to": 8,
       "label": "DET-LIPSA-OBS",
       "information": {
         "name": "Detectare lipsa obstacol",
         "details": "Folosind senzorii de distanță putem interpreta faptul că nu avem obstacol în față"
       },
-      "dependsOn": [5],
+      "dependsOn": [3, 5],
       "requires": [
         {
           "which": 3,
@@ -592,7 +651,7 @@
         "name": "Determinare stabilitate",
         "details": "Determină dacă drona e stabilă."
       },
-      "dependsOn": [],
+      "dependsOn": [3, 9, 10, 11],
       "requires": [
         {
           "which": 3,
@@ -608,7 +667,7 @@
         "name": "Detectare vant si ploaie slabe",
         "details": "Accelerometrul detectează vânt slab si senzorul de umiditate detectează o ploaie slabă"
       },
-      "dependsOn": [],
+      "dependsOn": [4, 9, 10, 11],
       "requires": [
         {
           "which": 3,

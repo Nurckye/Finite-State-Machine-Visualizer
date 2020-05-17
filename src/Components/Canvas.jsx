@@ -171,6 +171,7 @@ class Canvas extends Component {
           initial={this.props.initial}
           stepInGraph={this.stepInGraph}
           incrementData={this.incrementData}
+          states={this.props.states}
           sensors={this.props.sensors}
           environment={this.props.environment}
           currentNode={this.state.currentNode}

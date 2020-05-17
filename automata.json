@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "statesNumber": 5
+    "statesNumber": 15
   },
   "environment": [
     {
@@ -30,7 +30,7 @@
   ],
   "sensors": [
     {
-      "name": "Rain sensor",
+      "name": "Water sensor",
       "key": 1,
       "maxValue": 70,
       "minValue": 0,
@@ -89,68 +89,156 @@
         "step": 0.1,
         "max": 123
       }
+    },
+    {
+      "name": "Senzor de distanta",
+      "key": 5,
+      "maxValue": 10,
+      "minValue": 1,
+      "value": 30,
+      "limit": {
+        "label": "Obstacle distance",
+        "valueType": "RELATIVE",
+        "relativeToEnviron": 1,
+        "value": 50,
+        "min": 0,
+        "step": 0.1,
+        "max": 123
+      }
     }
   ],
   "states": [
     {
-      "name": "Asteptare Comanda",
-      "information": "Prima stare",
+      "name": "Stare initiala",
+      "information": "Drona este oprită.",
       "key": 1,
       "category": "Initial"
     },
     {
-      "name": "Asteptare Comanda",
-      "information": "A doua",
+      "name": "Așteptare primire pachet",
+      "information": "Drona asteapta ca pachetul care trebuie livrat sa fie incarcat.",
       "key": 2,
       "category": ""
     },
     {
-      "name": "Asteptare Comanda",
-      "information": "Descriere Stare asteptare",
+      "name": "Pachet incarcat",
+      "information": "Drona se află în stadiul în care pachetul a fost încărcat.",
       "key": 3,
-      "category": "Final"
+      "category": ""
     },
     {
-      "name": "Stau csf",
-      "information": "Descriere Stare",
+      "name": "Așteptare primire traseu ",
+      "information": "Drona asteapta sa primesaca traseul pe care trebuie sa il urmeze si adresa la care trebuie sa faca livrarea.",
       "key": 4,
-      "category": "Final"
+      "category": ""
     },
     {
-      "name": "Asteptare Comanda",
-      "information": "Descriere stare asteptare",
+      "name": "Decolare",
+      "information": "Drona se ridica de la sol si isi incepe traseul.",
       "key": 5,
+      "category": ""
+    },
+    {
+      "name": "Regim de croazieră ",
+      "information": "Drona se afla in procesul de zbor si se deplaseaza in conditii normale.",
+      "key": 6,
+      "category": ""
+    },
+    {
+      "name": "Oprire de urgență",
+      "information": "Drona a fost avariata grav sau anumite conditii nu ii permit sa continue zborul asa ca este nevoita sa opreasca in cel mai apropiat loc disponibil.",
+      "key": 7,
+      "category": ""
+    },
+    {
+      "name": "Stabilizare",
+      "information": "Drona incearca sa se stabilizeze, astfel incat sa isi poata continua zborul.",
+      "key": 8,
+      "category": ""
+    },
+    {
+      "name": "Calculare loc aterizare de urgenta",
+      "information": "Drona cauta cea mai apropiata 'zona verde' in care poate opri astfel incat sa fie in siguranta (sa nu aterizeze in locuri nepermise: apa, proprietate privata, incendiu, zona cu risc).",
+      "key": 9,
+      "category": ""
+    },
+    {
+      "name": "Ocolire",
+      "information": "Drona ocoleste un obstacol pe care il intalneste in calea sa.",
+      "key": 10,
+      "category": ""
+    },
+    {
+      "name": "Prabusire",
+      "information": "Drona este avariata total, nu mai functioneaza.",
+      "key": 11,
+      "category": ""
+    },
+    {
+      "name": "Ajungere la destinatie",
+      "information": "Drona ajunge in zona de livrare a pachetului.",
+      "key": 12,
+      "category": ""
+    },
+    {
+      "name": "Coborare pachet",
+      "information": "Drona incepe procesul de coborare a pachetului. Coletul este coborat la sol cu ajutorul unui cablu,",
+      "key": 13,
+      "category": ""
+    },
+    {
+      "name": "Prelucrare semnal sonor și poză",
+      "information": "Drona avertizeaza clientul printr-un semnal sonor ca pachetul este livrat, iar apoi realizeaza o poza cu locatia livrarii pentru a avea o dovada a faptului ca pachetul a fost livrat corespunzator.",
+      "key": 14,
+      "category": ""
+    },
+    {
+      "name": "Asteptare raspuns si traseu revenire",
+      "information": "Coletul a fost livrat cu succes. Drona primeste un traseu de revenire la depozit și se întoarce în starea de zbor.",
+      "key": 15,
       "category": "Final"
     }
   ],
   "transitions": [
     {
-      "from": 4,
-      "to": 1,
-      "label": "Eveniment Y",
+      "from": 1,
+      "to": 2,
+      "label": "ON",
       "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
+        "name": "Pornire",
+        "details": "Drona este pornita prin apasarea unui buton de activare."
       },
-      "dependsOn": [1],
+      "dependsOn": [],
       "requires": [
         {
           "which": 3,
-          "value": true
-        },
+          "value": false
+        }
+      ]
+    },
+    {
+      "from": 2,
+      "to": 1,
+      "label": "OFF",
+      "information": {
+        "name": "Oprire",
+        "details": "Drona este oprita prin apasarea unui buton."
+      },
+      "dependsOn": [],
+      "requires": [
         {
-          "which": 4,
+          "which": 3,
           "value": true
         }
       ]
     },
     {
-      "from": 1,
-      "to": 2,
-      "label": "Eveniment H",
+      "from": 2,
+      "to": 3,
+      "label": "DET-GR",
       "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
+        "name": "Determinare greutate",
+        "details": "Senzorul de greutate determină faptul că drona este încărcată"
       },
       "dependsOn": [],
       "requires": [
@@ -167,10 +255,10 @@
     {
       "from": 3,
       "to": 2,
-      "label": "Eveniment X",
+      "label": "REFUZ",
       "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
+        "name": "Refuz",
+        "details": "Utilizatorul primește un mesaj de refuzare de plecare de la dronă, în cazul în care nu a fost încărcat corespunzător pachetul."
       },
       "dependsOn": [],
       "requires": [
@@ -180,77 +268,37 @@
         },
         {
           "which": 4,
-          "value": true
+          "value": false
         }
       ]
     },
     {
-      "from": 2,
-      "to": 2,
-      "label": "Eveniment K",
-      "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
-      },
-      "dependsOn": [],
-      "requires": [
-        {
-          "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
-          "value": true
-        }
-      ]
-    },
-    {
-      "from": 1,
-      "to": 3,
-      "label": "Eveniment Q",
-      "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
-      },
-      "dependsOn": [],
-      "requires": [
-        {
-          "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
-          "value": true
-        }
-      ]
-    },
-    {
-      "from": 2,
-      "to": 5,
-      "label": "Eveniment T",
-      "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
-      },
-      "dependsOn": [],
-      "requires": [
-        {
-          "which": 3,
-          "value": true
-        },
-        {
-          "which": 4,
-          "value": true
-        }
-      ]
-    },
-    {
-      "from": 5,
+      "from": 3,
       "to": 4,
-      "label": "Eveniment G",
+      "label": "TR-NOT-INC",
       "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
+        "name": "Trimite notificare incarcare",
+        "details": "Trimite notificare către server cu faptul că drona este încărcată."
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "label": "PRIMIRE-TR",
+      "information": {
+        "name": "Primire traseu",
+        "details": "Primirea traseului și a hărții care cuprinde zonele roșii (zone în care drona nu are voie să aterizeze în caz de urgență)."
       },
       "dependsOn": [4],
       "requires": [
@@ -265,12 +313,12 @@
       ]
     },
     {
-      "from": 4,
-      "to": 2,
-      "label": "Eveniment L",
+      "from": 5,
+      "to": 6,
+      "label": "AT-ALT-CR",
       "information": {
-        "name": "Nume tranzitie",
-        "details": "Blah blah blash"
+        "name": "Atingerea altitudinii corespunzătoare",
+        "details": "Este atinsa inaltimea prestabilita la care drona trebuie sa ajunga."
       },
       "dependsOn": [],
       "requires": [
@@ -280,6 +328,290 @@
         },
         {
           "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 6,
+      "label": "TRIM-RECURENTA",
+      "information": {
+        "name": "Trimitere recurenta",
+        "details": "Trimiterea datelor către utilizator (toate datele de la senzori: poziție GPS, nivel baterie, temperatură, umiditate)."
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 11,
+      "label": "AVARIE",
+      "information": {
+        "name": "Avarie",
+        "details": "Drona este avariată grav în urma coliziunii cu un obstacol sau din alte motive."
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 9,
+      "label": "VÂNT-PUTERNIC, PLOAIE-PUTERNICĂ, ALERTA-EXTERNA",
+      "information": {
+        "name": "Conditii nefavorabile",
+        "details": "Accelerometrul detectează vânt puternic (accelerația este negativă). Senzorul de umiditate detectează o ploaie puternică. Serverul trimite o alertă de oprire către dronă."
+      },
+      "dependsOn": [1, 2],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 9,
+      "to": 7,
+      "label": "PR-LOC-AT",
+      "information": {
+        "name": "Primirea locației de aterizare",
+        "details": "Drona primeste o zona in care ii este permis sa aterizeze."
+      },
+      "dependsOn": [4],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 7,
+      "to": 5,
+      "label": "NOT-CONT-ZB",
+      "information": {
+        "name": "Notificare continuare zbor",
+        "details": "Daca condițiile meteorologice permit continuarea zborului, drona primește notificarea de a decola."
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 12,
+      "label": "INTRARE-SP-OP",
+      "information": {
+        "name": "Intrare spatiu oprire",
+        "details": "În funcție de senzorii GPS putem constata dacă drona a ajuns la destinație"
+      },
+      "dependsOn": [4],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 12,
+      "to": 13,
+      "label": "DET-PACHET",
+      "information": {
+        "name": "Detectare Pachet",
+        "details": "Drona verifică dacă livrarea este finalizată (pachetul a fost lăsat la destinație)"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 13,
+      "to": 14,
+      "label": "DET-LIPSA-GR",
+      "information": {
+        "name": "Detectare Lipsa Greutate",
+        "details": "Determină folosind senzorul de greutate faptul că drona nu este încărcată"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": false
+        }
+      ]
+    },
+    {
+      "from": 14,
+      "to": 15,
+      "label": "TR-POZA-CONF",
+      "information": {
+        "name": "Trimitere Poza Confirmare",
+        "details": "Atunci când coletul ajunge la destinaţie, drona realizează o poză a locaţiei ca măsură pentru cazul în care destinaţia nu este corectă, de asemenea trimite confirmarea comenzii către server și client."
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": false
+        }
+      ]
+    },
+    {
+      "from": 15,
+      "to": 5,
+      "label": "PRIMIRE-TR-RET",
+      "information": {
+        "name": "Primire Traseu Retur",
+        "details": "Drona primește un traseu de reîntoarcere"
+      },
+      "dependsOn": [4],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": false
+        }
+      ]
+    },
+    {
+      "from": 12,
+      "to": 2,
+      "label": "DET-LIPSA-PACHET",
+      "information": {
+        "name": "Detectare lipsa pachet",
+        "details": "Drona constata ca nu are pachet"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": false
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 10,
+      "label": "DET-OBS",
+      "information": {
+        "name": "Detectare obstacol",
+        "details": "Folosind senzorii de distanță putem interpreta dacă avem obstacol în față"
+      },
+      "dependsOn": [5],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 10,
+      "label": "DET-LIPSA-OBS",
+      "information": {
+        "name": "Detectare lipsa obstacol",
+        "details": "Folosind senzorii de distanță putem interpreta faptul că nu avem obstacol în față"
+      },
+      "dependsOn": [5],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 8,
+      "to": 6,
+      "label": "DET-STABIL",
+      "information": {
+        "name": "Determinare stabilitate",
+        "details": "Determină dacă drona e stabilă."
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 6,
+      "to": 8,
+      "label": "DET-VANT-SLAB,DET-PLOAIE-SLABA",
+      "information": {
+        "name": "Detectare vant si ploaie slabe",
+        "details": "Accelerometrul detectează vânt slab si senzorul de umiditate detectează o ploaie slabă"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
           "value": true
         }
       ]

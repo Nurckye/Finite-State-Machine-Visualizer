@@ -1,0 +1,197 @@
+{
+  
+  "states": [
+    {
+      "name": "Asteptare Comanda",
+      "information": "Prima stare",
+      "key": 1,
+      "category": "Initial"
+    },
+    {
+      "name": "Asteptare Comanda",
+      "information": "A doua",
+      "key": 2,
+      "category": ""
+    },
+    {
+      "name": "Asteptare Comanda",
+      "information": "Descriere Stare asteptare",
+      "key": 3,
+      "category": "Final"
+    },
+    {
+      "name": "Stau csf",
+      "information": "Descriere Stare",
+      "key": 4,
+      "category": "Final"
+    },
+    {
+      "name": "Asteptare Comanda",
+      "information": "Descriere stare asteptare",
+      "key": 5,
+      "category": "Final"
+    }
+  ],
+  "transitions": [
+    {
+      "from": 4,
+      "to": 1,
+      "label": "Eveniment Y",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [1],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 1,
+      "to": 2,
+      "label": "Eveniment H",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 3,
+      "to": 2,
+      "label": "Eveniment X",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 2,
+      "to": 2,
+      "label": "Eveniment K",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 1,
+      "to": 3,
+      "label": "Eveniment Q",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 2,
+      "to": 5,
+      "label": "Eveniment T",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 5,
+      "to": 4,
+      "label": "Eveniment G",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [4],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    },
+    {
+      "from": 4,
+      "to": 2,
+      "label": "Eveniment L",
+      "information": {
+        "name": "Nume tranzitie",
+        "details": "Blah blah blash"
+      },
+      "dependsOn": [],
+      "requires": [
+        {
+          "which": 3,
+          "value": true
+        },
+        {
+          "which": 4,
+          "value": true
+        }
+      ]
+    }
+  ]
+}

@@ -71,22 +71,26 @@ function TopBar(props) {
     <React.Fragment>
       <div className="top-bar">
         {Object.entries(props.transitions).map(([k, v], ix) => (
-          <button
-            className={`transition ${props.currentNode}-${k}`}
-            key={`tr-top${ix}`}
-            onClick={() => props.stepInGraph(k)}
-            style={{
-              backgroundColor: canTransitionHappen(v) ? "#9B9B9B" : "#a61c1c",
-            }}
-          >
-            {v.label}
-          </button>
+          <span>
+            <button
+              className={`transition ${props.currentNode}-${k}`}
+              key={`tr-top${ix}`}
+              onClick={() => props.stepInGraph(k)}
+              style={{
+                backgroundColor: canTransitionHappen(v)
+                  ? "#9B9B9B"
+                  : "rgb(217,83,79)",
+              }}
+            >
+              {v.label}
+            </button>
+          </span>
         ))}
       </div>
       <button
         className="start-button"
         onClick={() => {
-          props.stepInGraph(props.initial);
+          props.stepInGraph(started ? null : props.initial);
           changeStarted(!started);
         }}
       >

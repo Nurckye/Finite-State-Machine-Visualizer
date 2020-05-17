@@ -31,14 +31,30 @@ $right-offset-btn: 120px;
   background-color: white;
   width: calc(100% - #{$left-offset} - #{$right-offset});
   height: 64px;
+  max-height: 64px;
   left: $left-offset;
   top: 24px;
   border-radius: 8px;
   box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+
+  overflow: auto;
+  white-space: nowrap;
+  vertical-align: middle;
   display: flex;
   align-items: center;
-  & > button {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  & span {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  & button {
     transition: 0.2s;
+    max-width: 100%;
     background: #8a8a8a;
     display: flex;
     align-items: center;
@@ -60,7 +76,7 @@ $right-offset-btn: 120px;
 .pop-up {
   position: fixed;
   width: 200px;
-  height: 150px;
+  // height: 150px;
   padding: 10px 20px;
   background-color: white;
   border: 1px solid #d7d7d7;
@@ -75,4 +91,10 @@ $right-offset-btn: 120px;
   & p {
     font-size: 12px;
   }
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+
+/* Hide scrollbar for IE and Edge */
+.example {
+  -ms-overflow-style: none;
 }

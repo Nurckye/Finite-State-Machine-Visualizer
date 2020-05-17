@@ -3,6 +3,23 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 
+const ErrorIcon = () => (
+  <svg
+    width="46"
+    height="46"
+    viewBox="0 0 46 46"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M31.2792 37.2599L36.6033 31.9358L27.9517 23.2842L36.6032 14.6327L31.2791 9.30857L22.6276 17.9601L13.9759 9.30841L8.65179 14.6325L17.3035 23.2842L8.65168 31.936L13.9758 37.2601L22.6276 28.6083L31.2792 37.2599Z"
+      fill="white"
+    />
+  </svg>
+);
+
 const useStyles = makeStyles({
   root: {
     width: 250,
@@ -155,36 +172,99 @@ class LeftPanel extends Component {
   state = {
     isLoaded: false,
     currentTab: "Sensors",
+    errored: false,
+    errorMessage: "",
   };
 
   setErrorMessageLoading(message) {}
 
   loadMachine() {
     let loadedMachine;
+    let seenList;
     let machineJson = document.getElementById("textarea-json").value;
     try {
       loadedMachine = JSON.parse(machineJson);
     } catch {
-      this.setErrorMessageLoading("Invalid JSON format");
-      return;
+      throw "Invalid JSON format";
     }
 
+    if (
+      !("environment" in loadedMachine) ||
+      !("sensors" in loadedMachine) ||
+      !("states" in loadedMachine) ||
+      !("transitions" in loadedMachine)
+    )
+      throw `Missing fields for finite state machine`;
+
+    let sensorsSeenList = {};
     let newSensors = {};
-    loadedMachine.sensors.forEach(
-      (sensor) => (newSensors[sensor.key] = sensor)
-    );
+    loadedMachine.sensors.forEach((sensor) => {
+      if (sensorsSeenList[sensor.key])
+        throw `Duplicate key for sensors: ${sensor.key}`;
+      if (
+        typeof sensor.minValue !== "number" ||
+        typeof sensor.maxValue !== "number"
+      )
+        throw `Minimum and maximum values for sensor ${sensor.key} must be real numbers`;
+      if (sensor.minValue >= sensor.maxValue)
+        throw `Maximum value for sensor ${sensor.key} must be strictly greater than the minimum value`;
+      if (!sensor.limit.label)
+        throw `Limit label for sensor ${sensor.key} must be set`;
+      if (!sensor.limit.label)
+        throw `Limit label for sensor ${sensor.key} must be set`;
+      if (
+        typeof sensor.limit.min !== "number" ||
+        typeof sensor.limit.max !== "number"
+      )
+        throw `Minimum and maximum limit thresholds for sensor ${sensor.key} must be real numbers`;
+      if (sensor.limit.minValue >= sensor.limit.maxValue)
+        throw `Maximum limit threshold value for sensor ${sensor.key} must be strictly greater than the minimum value`;
+      if (
+        sensor.limit.valueType !== "NUMBER" &&
+        sensor.limit.valueType !== "RANGE" &&
+        sensor.limit.valueType !== "RELATIVE"
+      )
+        throw `Limit value type of sensor ${sensor.key} must either NUMBER, RANGE or RELATIVE`;
+
+      sensorsSeenList[sensor.key] = true;
+      newSensors[sensor.key] = sensor;
+    });
     this.props.machineSetter.sensors(newSensors);
 
+    let envSeenList = {};
     let newEnv = {};
-    loadedMachine.environment.forEach((env) => (newEnv[env.key] = env));
+    loadedMachine.environment.forEach((env) => {
+      if (envSeenList[env.key])
+        throw `Duplicate key for internal state: ${env.key}`;
+      if (env.type !== "BOOL" && env.type !== "FLOAT")
+        throw `Type for internal state ${env.key} must be either BOOL or FLOAT`;
+      if (env.type === "BOOL" && typeof env.value !== "boolean")
+        throw `Value for internal state ${env.key} must be either true or false`;
+      if (env.type === "FLOAT" && typeof env.value !== "number") {
+        throw `Value for internal state ${env.key} must be a real number`;
+      }
+
+      envSeenList[env.key] = true;
+      newEnv[env.key] = env;
+    });
     this.props.machineSetter.environment(newEnv);
 
+    let statesSeenList = {};
     let newStates = {};
-    loadedMachine.states.forEach((st) => (newStates[st.key] = st));
+    loadedMachine.states.forEach((st) => {
+      if (statesSeenList[st.key]) throw `Duplicate key for states: ${st.key}`;
+      statesSeenList[st.key] = true;
+      newStates[st.key] = st;
+    });
     this.props.machineSetter.states(newStates);
 
+    let initialStateSet = false;
     loadedMachine.states.forEach((st, ix) => {
-      if (st.category === "Initial") this.props.machineSetter.initial(st.key);
+      if (st.category === "Initial") {
+        if (initialStateSet) throw "Two initial states detected!";
+        initialStateSet = true;
+        this.props.machineSetter.initial(st.key);
+      }
     });
 
     let nodeArr = Object.values(newStates).map((state, ix) => {
@@ -198,6 +278,23 @@ class LeftPanel extends Component {
     });
     this.props.machineSetter.nodeDataArray(nodeArr);
 
+    loadedMachine.transitions.forEach((tr) => {
+      if (!tr.label)
+        throw `Missing label for transition - node ${tr.from} to node ${tr.to}`;
+
+      if (!(tr.from in statesSeenList) || !(tr.to in statesSeenList))
+        throw `Broken link for transition - node ${tr.from} to node ${tr.to}`;
+      tr.dependsOn.forEach((dp) => {
+        if (!(dp in sensorsSeenList))
+          throw `Sensor for key ${dp} was not declared - node ${tr.from} to node ${tr.to}`;
+      });
+      tr.requires.forEach((rq) => {
+        if (!(rq.which in envSeenList))
+          throw `Internal state for key ${rq.which} was not declared - node ${tr.from} to node ${tr.to}`;
+        if (typeof rq.value !== "boolean")
+          throw `Internal state for key ${rq.which} must be either true or false - node ${tr.from} to node ${tr.to}`;
+      });
+    });
     this.props.machineSetter.transitions(loadedMachine.transitions);
     const transitionGraph = {};
     loadedMachine.states.forEach((state) => (transitionGraph[state.key] = {}));
@@ -222,7 +319,7 @@ class LeftPanel extends Component {
     this.props.machineSetter.linkDataArray(transitionArr);
 
     console.log(loadedMachine);
-    this.setState({ isLoaded: true });
+    this.setState({ isLoaded: true, errored: false, errorMessage: "" });
   }
 
   sensorChange = (key) => (e) => {
@@ -341,7 +438,23 @@ class LeftPanel extends Component {
       return (
         <div className="json-input">
           <textarea id="textarea-json" cols="39"></textarea>
-          <button onClick={() => this.loadMachine()}>Load machine</button>
+          <button
+            onClick={() => {
+              try {
+                this.loadMachine();
+              } catch (err) {
+                this.setState(
+                  {
+                    errored: true,
+                    errorMessage: err,
+                  },
+                  () => this.props.machineSetter.resetToInitial()
+                );
+              }
+            }}
+          >
+            Load machine
+          </button>
         </div>
       );
     else
@@ -357,11 +470,22 @@ class LeftPanel extends Component {
 
   render() {
     return (
-      <div className="left-panel">
-        <DescriptionArea currentState={this.props.currentState} />
-        <hr />
-        {this.renderLoader()}
-      </div>
+      <React.Fragment>
+        <div className="left-panel">
+          <DescriptionArea currentState={this.props.currentState} />
+          <hr />
+          {this.renderLoader()}
+        </div>
+        <div
+          className="error-container"
+          style={{ display: this.state.errored ? "flex" : "none" }}
+        >
+          <div className="error-message">{this.state.errorMessage}</div>
+          <div className="error-bubble">
+            <ErrorIcon />
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }

@@ -43,9 +43,6 @@ $right-offset-btn: 120px;
   vertical-align: middle;
   display: flex;
   align-items: center;
-  // &::-webkit-scrollbar {
-  //   display: none;
-  // }
 
   & span {
     display: inline-block;
@@ -92,9 +89,6 @@ $right-offset-btn: 120px;
     font-size: 12px;
   }
 }
-/* Hide scrollbar for Chrome, Safari and Opera */
-
-/* Hide scrollbar for IE and Edge */
 .example {
   -ms-overflow-style: none;
 }

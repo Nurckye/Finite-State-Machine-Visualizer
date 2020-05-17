@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Canvas from "./Canvas";
 import LeftPanel from "./LeftPanel";
 
@@ -30,9 +30,25 @@ function ProjectInfoPopUp(props) {
   );
 
   return (
-    <div className="info-container">
-      <div className="information"></div>
-      <button>
+    <div
+      className="info-container"
+      style={{
+        display: Object.values(props.states).length !== 0 ? "flex" : "none",
+      }}
+    >
+      <table
+        style={{
+          display: isOpen ? "flex" : "none",
+        }}
+      >
+        {Object.values(props.states).map((element) => (
+          <tr>
+            <th>{`Q${element.key}`}</th>
+            <th>{element.name}</th>
+          </tr>
+        ))}
+      </table>
+      <button onClick={() => changeOpen(!isOpen)}>
         <InfoIcon />
       </button>
     </div>
@@ -74,8 +90,6 @@ class LayoutController extends Component {
       "contextmenu",
       (e) => {
         e.preventDefault();
-        // console.log(e.pageX);
-        // console.log(e.pageY);
         if (
           typeof e.target.className === "string" &&
           e.target.className.includes("transition")
@@ -156,7 +170,7 @@ class LayoutController extends Component {
           environment={this.state.environment}
           machineSetter={this.machineSetter}
         />
-        <ProjectInfoPopUp />
+        <ProjectInfoPopUp states={this.state.states} />
       </React.Fragment>
     );
   }

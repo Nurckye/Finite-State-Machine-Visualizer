@@ -26,7 +26,8 @@ body {
 
 .error-container {
   position: absolute;
-  left: calc(100% - #{$right-offset-btn} - 100px);
+  left: calc(100% - #{$right-offset-btn});
+
   top: calc(100% - 100px);
   align-items: center;
 
@@ -60,6 +61,7 @@ body {
   top: calc(100% - 100px);
 
   & > button {
+    outline: none;
     width: 64px;
     height: 64px;
     cursor: pointer;
@@ -74,4 +76,57 @@ body {
       opacity: 0.8;
     }
   }
+
+  & > table {
+    position: fixed;
+    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.06);
+    background-color: white;
+    padding: 18px;
+    border-radius: 8px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    overflow: scroll;
+    overflow-x: hidden;
+    left: calc(100% - #{$right-offset-btn} - 370px);
+    top: calc(100% - 290px);
+    & > tr {
+      display: flex;
+      padding: 6px;
+      border-bottom: 1px solid #afafaf;
+      &:hover {
+        background-color: #e6e6e6;
+      }
+      & > th:first-child {
+        margin-right: 10px;
+      }
+      & > th:last-child {
+        margin-left: auto;
+        margin-right: 4px;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(199, 199, 199);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(136, 136, 136);
 }

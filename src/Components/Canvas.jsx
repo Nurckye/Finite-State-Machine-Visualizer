@@ -73,7 +73,7 @@ function initDiagram() {
       $(go.Shape, "Ring", new go.Binding("fill", "color")),
       $(
         go.TextBlock,
-        { margin: 4, stroke: "black" }, // some room around the text
+        { margin: 5, stroke: "black" }, // some room around the text
         new go.Binding("text", "name")
       )
     )
@@ -131,27 +131,13 @@ class Canvas extends Component {
     initial: null,
   };
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (
-  //     this.props.states !== nextProps.states ||
-  //     this.props.transitions !== nextProps.transitions ||
-  //     this.props.transitionGraph !== nextProps.transitionGraph ||
-  //     this.props.initial !== nextProps.initial ||
-  //     this.props.sensors !== nextProps.sensors ||
-  //     this.props.environment !== nextProps.environment ||
-  //     this.state.currentNode !== nextState.currentNode
-  //   )
-  //     return true;
-  //   return false;
-  // }
-
   constructor(props) {
     super(props);
     this.diagramRef = React.createRef();
   }
 
   stepInGraph = (nextNode) => {
-    let markedColor = "#3f4c1c";
+    let markedColor = "#8a8a8a";
     let unmarkedColor = "white";
     this.setState({ currentNode: nextNode }, () => {
       const diagram = this.diagramRef.current.getDiagram();

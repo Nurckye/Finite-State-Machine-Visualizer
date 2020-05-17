@@ -473,7 +473,7 @@ class LeftPanel extends Component {
       <React.Fragment>
         <div className="left-panel">
           <DescriptionArea currentState={this.props.currentState} />
-          <hr />
+          <div className="separator-bar" />
           {this.renderLoader()}
         </div>
         <div

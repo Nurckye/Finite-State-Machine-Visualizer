@@ -43,9 +43,9 @@ $right-offset-btn: 120px;
   vertical-align: middle;
   display: flex;
   align-items: center;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 
   & span {
     display: inline-block;

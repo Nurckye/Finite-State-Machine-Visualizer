@@ -9,19 +9,22 @@ $text-color: #0f0f0f;
   background-color: white;
   box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.06);
   color: $text-color;
-
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
   & > .information-area {
     & > p {
       text-align: justify;
     }
-    margin-bottom: 20px;
   }
 
-  & > hr {
-    margin-bottom: 24px;
+  & > .separator-bar {
+    margin-bottom: 20px;
     background-color: #d7d7d7;
-    color: #757575;
+    color: black;
     height: 1px;
+    min-height: 1px !important;
+    display: flex;
     border: none;
   }
 
@@ -83,6 +86,8 @@ $text-color: #0f0f0f;
     display: flex;
     align-items: center;
     flex-direction: column;
+    height: 100%;
+    margin-bottom: 40px;
     justify-content: space-between;
     & > button {
       transition: 0.07s;
@@ -96,14 +101,12 @@ $text-color: #0f0f0f;
       cursor: pointer;
       outline: inherit;
       &:hover {
-        // color: #202020;
-        // background-color: rgb(71, 71, 71);
         background-color: #8a8a8a;
       }
     }
     & textarea {
       width: 100%;
-      height: 300px;
+      height: 100%;
       border-radius: 4px;
       resize: none;
       outline: none;
